@@ -105,7 +105,6 @@ namespace TodoApp
                     {
                         Unsupported();
                     }
-
                 }
 
                 hasBeenDoneYet = easteregg.EasterEggWednesday(input, dayToChoose, hasBeenDoneYet);
