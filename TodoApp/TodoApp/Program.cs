@@ -1,16 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TodoApp
 {
     class Program
     {
+        static string dayToChoose;
+        static Read read = new Read();
+        static Add add = new Add();
+        static Remove remove = new Remove();
+        static Check check = new Check();
+        static EasterEggs easteregg = new EasterEggs();
+
         static void Inform()
         {
             Console.WriteLine("Command Line Todo application\n=============================\n\nCommand line arguments:\n -l   Lists all the tasks\n -a   Adds a new task\n -r   Removes a task\n -c   Completes a task");
+        }
+
+        static void DayChoose()
+        {
+            Console.Write("Today: ");
+            string input = Console.ReadLine();
+            if (input == "Monday" || input == "monday")
+            {
+                dayToChoose = "monday.txt";
+            }
+            else if (input == "Tuesday" || input == "tuesday")
+            {
+                dayToChoose = "tuesday.txt";
+            }
+            else if (input == "Wednesday" || input == "wednesday")
+            {
+                dayToChoose = "wednesday.txt";
+            }
+            else if (input == "Thursday" || input == "thursday")
+            {
+                dayToChoose = "thursday.txt";
+            }
+            else if (input == "Friday" || input == "friday")
+            {
+                dayToChoose = "friday.txt";
+            }
+            else
+            {
+                Console.WriteLine("Not a valid weekday");
+            }
+
         }
 
         static void Unsupported()
@@ -22,10 +56,14 @@ namespace TodoApp
         {
             Inform();
             string input;
-            Read read = new Read();
-            Add add = new Add();
-            Remove remove = new Remove();
-            Check check = new Check();
+            bool hasBeenDoneYet = false;
+
+            DayChoose();
+            while (dayToChoose == "invalid")
+            {
+                DayChoose();
+            }
+
             while (true)
             {
                 input = Console.ReadLine();
@@ -44,7 +82,7 @@ namespace TodoApp
                     {
                         if (input.Length == 2)
                         {
-                            read.ReadText();
+                            read.ReadText(dayToChoose);
                         }
                         else
                         {
@@ -53,21 +91,25 @@ namespace TodoApp
                     }
                     else if (input.Substring(0, 2) == "-a")
                     {
-                        add.AddText(input);
+                        add.AddText(input, dayToChoose);
                     }
                     else if (input.Substring(0, 2) == "-r")
                     {
-                        remove.RemoveText(input);
+                        remove.RemoveText(input, dayToChoose);
                     }
                     else if (input.Substring(0, 2) == "-c")
                     {
-                        check.CheckText(input);
+                        check.CheckText(input, dayToChoose);
                     }
-                    else
+                    else if (dayToChoose != "friday.txt" || hasBeenDoneYet == true)
                     {
                         Unsupported();
                     }
+
                 }
+
+                hasBeenDoneYet = easteregg.EasterEggWednesday(input, dayToChoose, hasBeenDoneYet);
+                hasBeenDoneYet = easteregg.EasterEggFriday(input, dayToChoose, hasBeenDoneYet);
             }
         }
     }

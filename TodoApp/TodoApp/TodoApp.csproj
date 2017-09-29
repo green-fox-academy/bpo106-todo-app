@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Add.cs" />
     <Compile Include="Check.cs" />
+    <Compile Include="EasterEggs.cs" />
     <Compile Include="Read.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

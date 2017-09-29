@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace TodoApp
 {
     public class Check
     {
-        public void CheckText(string input)
+        public void CheckText(string input, string inputDay)
         {
             if (input.Length < 4)
             {
@@ -36,7 +33,7 @@ namespace TodoApp
                         List<string> list = new List<string>();
                         int i = 0;
 
-                        using (StreamReader file = new StreamReader("tasks.txt"))
+                        using (StreamReader file = new StreamReader(inputDay))
                         {
                             while ((line = file.ReadLine()) != null)
                             {
@@ -70,7 +67,7 @@ namespace TodoApp
                             }
                         }
 
-                        using (StreamWriter fileOut = new StreamWriter("tasks.txt"))
+                        using (StreamWriter fileOut = new StreamWriter(inputDay))
                         {
                             for (i = 0; i < list.Count; i++)
                             {

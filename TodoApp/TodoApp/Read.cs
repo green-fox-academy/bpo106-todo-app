@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace TodoApp
 {
     public class Read
     {
-        public void ReadText()
+        public void ReadText(string inputDay)
         {
             string line;
             int i = 0;
-            StreamReader file = new StreamReader("tasks.txt");
+            StreamReader file = new StreamReader(inputDay);
 
             while ((line = file.ReadLine()) != null)
             {

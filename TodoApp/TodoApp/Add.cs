@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace TodoApp
 {
     public class Add
     {
-        public void AddText(string input)
+        public void AddText(string input, string inputDay)
         {
             if (input.Length < 5)
             {
@@ -23,7 +19,7 @@ namespace TodoApp
             {
                 if (input.Substring(2, 2) == " \"" && input.Substring(input.Length - 1, 1) == "\"")
                 {
-                    using (StreamWriter file = File.AppendText("tasks.txt"))
+                    using (StreamWriter file = File.AppendText(inputDay))
                     {
                         string line = "[ ] " + input.Substring(4, input.Length - 5);
                         file.WriteLine(line);
