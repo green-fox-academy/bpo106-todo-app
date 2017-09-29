@@ -30,41 +30,43 @@ namespace TodoApp
             {
                 input = Console.ReadLine();
 
-                switch (input.Length)
+                if (input.Length == 0)
                 {
-                    case 0:
-                        Console.ReadLine();
-                        break;
-                    case 1:
-                        Unsupported();
-                        break;
-                    default:
-                        switch (input.Substring(0, 2))
+                    Console.ReadLine();
+                }
+                else if (input.Length == 1)
+                {
+                    Unsupported();
+                }
+                else
+                {
+                    if (input.Substring(0, 2) == "-l")
+                    {
+                        if (input.Length == 2)
                         {
-                            case "-l":
-                                if (input.Length == 2)
-                                {
-                                    read.ReadText();
-                                }
-                                else
-                                {
-                                    Unsupported();
-                                }
-                                break;
-                            case "-a":
-                                add.AddText(input);
-                                break;
-                            case "-r":
-                                remove.RemoveText(input);
-                                break;
-                            case "-c":
-                                check.CheckText(input);
-                                break;
-                            default:
-                                Unsupported();
-                                break;
+                            read.ReadText();
                         }
-                        break;
+                        else
+                        {
+                            Unsupported();
+                        }
+                    }
+                    else if (input.Substring(0, 2) == "-a")
+                    {
+                        add.AddText(input);
+                    }
+                    else if (input.Substring(0, 2) == "-r")
+                    {
+                        remove.RemoveText(input);
+                    }
+                    else if (input.Substring(0, 2) == "-c")
+                    {
+                        check.CheckText(input);
+                    }
+                    else
+                    {
+                        Unsupported();
+                    }
                 }
             }
         }

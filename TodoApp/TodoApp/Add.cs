@@ -23,10 +23,11 @@ namespace TodoApp
             {
                 if (input.Substring(2, 2) == " \"" && input.Substring(input.Length - 1, 1) == "\"")
                 {
-                    StreamWriter file = File.AppendText("tasks.txt");
-                    string line = "[ ] " + input.Substring(4, input.Length - 5);
-                    file.WriteLine(line);
-                    file.Close();
+                    using (StreamWriter file = File.AppendText("tasks.txt"))
+                    {
+                        string line = "[ ] " + input.Substring(4, input.Length - 5);
+                        file.WriteLine(line);
+                    }
                 }
                 else
                 {

@@ -25,7 +25,7 @@ namespace TodoApp
                         if (input.ToCharArray()[i] > 57 || input.ToCharArray()[i] < 48)
                         {
                             isNumber = false;
-                            Console.WriteLine("Unable to check: index is not a number");
+                            Console.WriteLine("Unable to check: index is not an unsigned number");
                         }
                     }
                     if (isNumber)
@@ -35,47 +35,48 @@ namespace TodoApp
                         string line;
                         List<string> list = new List<string>();
                         int i = 0;
-                        StreamReader file = new StreamReader("tasks.txt");
-                        while ((line = file.ReadLine()) != null)
+
+                        using (StreamReader file = new StreamReader("tasks.txt"))
                         {
-                            if (line.Length > 0)
+                            while ((line = file.ReadLine()) != null)
                             {
-                                i++;
-                                if (num == i)
+                                if (line.Length > 0)
                                 {
-                                    if (line.Substring(0, 3) == "[X]")
+                                    i++;
+                                    if (num == i)
                                     {
-                                        Console.WriteLine("Unable to check: task is already done");
-                                        file.Close();
-                                        return;
+                                        if (line.Substring(0, 3) == "[X]")
+                                        {
+                                            Console.WriteLine("Unable to check: task is already done");
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            line = "[X]" + line.Substring(3, line.Length - 3);
+                                        }
                                     }
-                                    else
-                                    {
-                                        line = "[X]" + line.Substring(3, line.Length - 3);
-                                    }
+                                    list.Add(line);
                                 }
-                                list.Add(line);
+                            }
+                            if (i == 0)
+                            {
+                                Console.WriteLine("No checkable content");
+                                return;
+                            }
+                            if (i < num)
+                            {
+                                Console.WriteLine("Unable to check: index is out of bound");
+                                return;
                             }
                         }
-                        file.Close();
-                        if (i == 0)
+
+                        using (StreamWriter fileOut = new StreamWriter("tasks.txt"))
                         {
-                            Console.WriteLine("No checkable content");
-                            file.Close();
-                            return;
+                            for (i = 0; i < list.Count; i++)
+                            {
+                                fileOut.WriteLine(list[i]);
+                            }
                         }
-                        if (i < num)
-                        {
-                            Console.WriteLine("Unable to check: index is out of bound");
-                            file.Close();
-                            return;
-                        }
-                        StreamWriter fileOut = new StreamWriter("tasks.txt");
-                        for (i = 0; i < list.Count; i++)
-                        {
-                            fileOut.WriteLine(list[i]);
-                        }
-                        fileOut.Close();
                     }
                 }
                 else
